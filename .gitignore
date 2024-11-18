@@ -1,3 +1,8 @@
 venv/
 /Gesprekken.xlsx
 /cleaned_van_gogh_letters.xlsx
+
+*.pyc
+.DS_Store
+backup
+chroma

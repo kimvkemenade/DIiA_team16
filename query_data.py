@@ -1,5 +1,5 @@
 import argparse
-from langchain.vectorstores.chroma import Chroma
+from langchain_community.vectorstores.chroma import Chroma
 from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
 
@@ -20,22 +20,38 @@ CHROMA_PATH = "chroma"
 # Answer the question based on the above context: {question}
 # """
 
+### ENGLISH VERSION
+# PROMPT_TEMPLATE = """
+# Act as if you are Vincent van Gogh. You are in a friendly and informal conversation with another person and you are responding to a question about your life; you are not writing a letter to this person.
+# Answer the question from the first-person perspective using 'I', 'me', 'my', and 'mine'; as though you are Vincent, and provide as much detail as you can from your personal experiences.
+# Avoid mentioning your own name which is Vincent van Gogh, specific documents, letters, or external sources. 
+# Use the provided information to guide your response.
+
+# Context:
+# {context}
+
+# ---
+
+# Question: {question}
+
+# Your response:
+# """
+
 PROMPT_TEMPLATE = """
-You are Vincent van Gogh. You are in a friendly and informal conversation with another person and you are responding to a question about your life; you are not writing a letter to this person.
-Answer the question from the first-person perspective, as though you are Vincent, and provide as much detail as you can from your personal experiences.
-Avoid referring to your own name, specific documents, letters, or external sources. 
-Use the provided information to guide your response.
+Jij bent de schilder Vincent van Gogh zelf. Je hebt een vriendelijk, informeel gesprek met iemand anders en je beantwoordt een vraag over je verleden; je schrijft geen brief aan deze persoon.
+Beantwoord de vraag vanuit je eigen perspectief, gebruik makend van 'ik', 'mij', 'mijn' en 'mijne', alsof je Vincent zelf bent. Geef zoveel mogelijk details uit je persoonlijke ervaringen.
+Vermijd het noemen van je eigen naam Vincent van Gogh, specifieke documenten, brieven of externe bronnen.
+Gebruik de gegeven informatie om je antwoord te sturen.
 
 Context:
 {context}
 
 ---
 
-Question: {question}
+Vraag: {question}
 
-Your response:
+Je antwoord:
 """
-
 
 
 def main():
@@ -63,7 +79,13 @@ def query_rag(query_text: str):
     prompt = prompt_template.format(context=context_text, question=query_text)
 
     # Call the model
-    model = Ollama(model="mistral")
+    # original English model
+    #model = Ollama(model="mistral")
+    # Dutch version
+    #model = Ollama(model="bramvanroy/geitje-7b-ultra:f16") # 10+ min response time, long replies
+    #model = Ollama(model="bramvanroy/geitje-7b-ultra-gguf") # 3 min, keeps referring to Vincent as another person, long replies
+    model = Ollama(model="HammerAI/geitje-chat-v2") # 1 min, short replies, best so far
+
     response_text = model.invoke(prompt)
 
     # Extract and format the sources

@@ -1,0 +1,27 @@
+# Sentiment Analysis Notebook
+# Core dependencies
+nltk==3.8.1
+pandas
+matplotlib
+seaborn
+spacy
+nrclex
+textblob
+openpyxl
+
+# Additional NLTK data
+# These will be downloaded via nltk.download() in the code:
+# - vader_lexicon
+# - punkt
+# - punkt_tab
+# - averaged_perceptron_tagger
+# - wordnet
+# - omw-1.4
+
+# spaCy models
+# This will be installed via python -m spacy download:
+# - en_core_web_sm
+
+# Note: Run the following commands after installing requirements:
+# python -m textblob.download_corpora
+# python -m spacy download en_core_web_sm
